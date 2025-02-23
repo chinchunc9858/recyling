@@ -12,7 +12,7 @@ useEffect(() => {
     .catch(function(error) {
         console.log("Error accessing media devices: ", error);
     });
-  }, []);  // Empty dependency array to run only once on mount
+}, []);
 
 return (
     <>
