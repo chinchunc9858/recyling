@@ -41,16 +41,24 @@ function Camera() {
       <div id = "container">
 
         <div id = "videoWrapper">
-
+            
+            <h1 id = "Heading">Is it Recyclable?</h1>
             <video ref={videoRef} id="videoElement" width="1980" height="1080" autoPlay></video>
-        
+            
             <div id = "buttonsContainer">
                 <button id = "TakePhotoButton" onClick={takeSnapshot}>📷 Take Photo</button>
                 <button id = "FlipCameraButton">🔄 Flip Camera</button>
             </div>
 
         </div>
-        
+
+        <div id="popup" class="popup">
+            <div class="popup-content">
+                <button id="button1">RECYCLABLE</button>
+                <button id="button2">NOT RECYCLABLE</button>
+            </div>
+        </div>
+
       </div>
 
       {/* Button to take a snapshot */}
