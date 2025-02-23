@@ -3,7 +3,6 @@
 import logo from './logo.svg';
 import './App.css';
 
-import Frame from './components/Frame';
 import Camera from './components/Camera';
 
 function App() {
@@ -14,9 +13,12 @@ function App() {
     <div className="App">
       <header className="App-header">
         
-        <Frame />
-
+  
       </header>
+
+      <body>
+          <Camera />
+      </body>
     </div>
   );
 }
