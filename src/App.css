@@ -16,6 +16,23 @@
   z-index: 2;
 }
 
+#points {
+  display: flex;
+  position: absolute;
+  left: 10%;
+  top: 5%;
+  transform: translateX(75vw);
+  width: 10vw;
+  font-size: 1vw; 
+  font-weight: bold; 
+  background-color: #fff; 
+  padding: 10px; 
+  border-Radius: 10px; 
+  white-space: nowrap;
+  justify-content: center; 
+  align-items: center; 
+}
+
 .popup {
   display: none;
   position: fixed;
@@ -199,18 +216,4 @@ button:hover {
   /* Optional: Set a max width to avoid overflow */
   max-width: 80%;
   text-align: center;
-}
-
-#CameraDiv {
-  margin : 0px auto;
-  border : 10px #333 solid;
-  background: #cdcdcd;
-  width : 800px;
-  height : 500px;
-}
-
-#videoElement {
-  width : 500px;
-  height : 375px;
-  background-color : #666;
 }
