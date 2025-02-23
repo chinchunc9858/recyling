@@ -38,3 +38,9 @@ button {
   top: 10px;
   right: 10px;
 }
+
+button:hover {
+  background-color: rgba(0, 0, 0, 0.7); /* Darken background on hover */
+  transform: scale(1.05); /* Slightly grow the button */
+  transition: transform 0.3s ease, background-color 0.3s ease; /* Smooth transition */
+}
