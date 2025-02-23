@@ -1,8 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
-import axios from 'axios';
-
-
-
+import React, { useEffect, useRef, useState } from "react";
+import axios from "axios";
+import { updatePoints, getTotalPoints } from "./updatePoint";
 
 function Camera() {
   const videoRef = useRef(null);
@@ -13,43 +11,29 @@ function Camera() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [prediction, setPrediction] = useState(null);
-  const [isPopupVisible, setIsPopupVisible] = useState(false); // State for popup visibility
+  const [isPopupVisible, setIsPopupVisible] = useState(false);
+  const [totalPoints, setTotalPoints] = useState(0);
 
   useEffect(() => {
-    navigator.mediaDevices.getUserMedia({ video: true })
+    // Fetch total points from Firebase when component mounts
+    const fetchPoints = async () => {
+      const points = await getTotalPoints();
+      setTotalPoints(points);
+    };
+    fetchPoints();
+  }, []);
+
+  // Access the camera
+  useEffect(() => {
+    navigator.mediaDevices
+      .getUserMedia({ video: true })
       .then((stream) => {
         videoRef.current.srcObject = stream;
       })
       .catch((error) => {
-        console.error("Error accessing media devices: ", error);
+        console.error("Error accessing camera:", error);
       });
   }, []);
-
-  const classifyImage = async (base64Data) => {
-    setIsLoading(true);
-    setError(null);
-    setPrediction(null);
-
-    try {
-      const response = await axios({
-        method: "POST",
-        url: "https://classify.roboflow.com/recyclable-materials-ljuil/2",
-        params: {
-          api_key: "3hqlPUXCMnNg32o1s2Fx"
-        },
-        data: base64Data,
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded"
-        }
-      });
-      setPrediction(response.data);
-      setIsPopupVisible(true); // Show popup when prediction is received
-    } catch (error) {
-      setError(error.message);
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   const takeSnapshot = () => {
     const video = videoRef.current;
@@ -58,13 +42,62 @@ function Camera() {
     canvas.width = video.videoWidth;
     canvas.height = video.videoHeight;
 
-    const context = canvas.getContext('2d');
+    const context = canvas.getContext("2d");
     context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-    const imageDataUrl = canvas.toDataURL('image/png');
-    const base64Data = imageDataUrl.split(',')[1];
+    const imageDataUrl = canvas.toDataURL("image/png");
     setSnapshot(imageDataUrl);
-    classifyImage(base64Data);
+    classifyImage(imageDataUrl.split(",")[1]); // Pass base64 data to classifyImage
+  };
+
+  const classifyImage = async (base64Data) => {
+    setIsLoading(true);
+    setError(null);
+    setPrediction(null);
+
+    let isRecyclable = function (rd) {
+      switch (rd) {
+        case "Aluminium":
+        case "Glass":
+        case "Paper":
+        case "Plastic":
+        case "Wood":
+        case "Can":
+          return [true, "Recyclable"];
+        default:
+          return [false, "Not recyclable"];
+      }
+    };
+
+    try {
+      const response = await axios({
+        method: "POST",
+        url: "https://classify.roboflow.com/recyclable-materials-ljuil/2",
+        params: {
+          api_key: "3hqlPUXCMnNg32o1s2Fx",
+        },
+        data: base64Data,
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      });
+
+      setPrediction(response.data);
+      setIsPopupVisible(true);
+
+      const predictedClass = response.data?.predictions[0]?.class;
+      const [recyclable, description] = isRecyclable(predictedClass);
+
+      await updatePoints(recyclable, description); // Update points in Firestore
+      const updatedPoints = await getTotalPoints(); // Fetch updated points
+      setTotalPoints(updatedPoints); // Update state
+
+      console.log(recyclable);
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleFileChange = (event) => {
@@ -72,26 +105,21 @@ function Camera() {
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        const base64Data = reader.result.split(',')[1];
-        setUploadedImage(reader.result);
-        classifyImage(base64Data);
+        const base64Data = reader.result.split(",")[1];
+        setUploadedImage(reader.result); // Set uploaded image for display
+        classifyImage(base64Data); // Classify the uploaded image
       };
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(file); // Convert file to base64
     }
   };
 
-  const handleUploadPhoto = () => {
-    fileInputRef.current.click();
-  };
-
-  const closePopup = () => {
-    setIsPopupVisible(false);
-    setSnapshot(null); // Reset snapshot
-    setUploadedImage(null); // Reset uploaded image
-  };
-  
   return (
     <>
+      {/* Display Total Points */}
+      <div style={{ position: "absolute", top: 20, right: 20, fontSize: "20px", fontWeight: "bold", backgroundColor: "#fff", padding: "10px", borderRadius: "10px" }}>
+        🏆 Total Points: {totalPoints}
+      </div>
+
       <div id="container">
         <div id="videoWrapper">
           <h1 id="Heading">Is it Recyclable?</h1>
@@ -99,11 +127,10 @@ function Camera() {
 
           <div id="buttonsContainer">
             <button className="options" id="TakePhotoButton" onClick={takeSnapshot} disabled={isLoading}>
-              {isLoading ? 'Processing...' : '📷 Take Photo'}
+              {isLoading ? "Processing..." : "📷 Take Photo"}
             </button>
-            <button className="options" id="FlipCameraButton">🔄 Flip Camera</button>
-            <button className="options" id="UploadPhoto" onClick={handleUploadPhoto} disabled={isLoading}>
-              {isLoading ? 'Processing...' : '📷 Upload a Photo'}
+            <button className="options" id="UploadPhoto" onClick={() => fileInputRef.current.click()} disabled={isLoading}>
+              {isLoading ? "Processing..." : "📷 Upload a Photo"}
             </button>
           </div>
         </div>
@@ -113,30 +140,18 @@ function Camera() {
             <div className="popup-content">
               <h3 className="popupText">Classification Result:</h3>
               <p className="popupText">Class: {prediction?.predictions[0]?.class || "Unknown"}</p>
-              <p className="popupText">Confidence: {prediction?.confidence ? `${(prediction.confidence * 100).toFixed(1)}%` : "N/A"}</p>
-              <button id="popupexit" onClick={closePopup}>X</button>
-              {snapshot && <img src={snapshot} alt="Snapshot" style={{ maxWidth: '300px' }} />}
-              {uploadedImage && <img src={uploadedImage} alt="Uploaded" style={{ maxWidth: '300px' }} />}
+              <button id="popupexit" onClick={() => setIsPopupVisible(false)}>X</button>
+              {snapshot && <img src={snapshot} alt="Snapshot" style={{ maxWidth: "300px" }} />}
+              {uploadedImage && <img src={uploadedImage} alt="Uploaded" style={{ maxWidth: "300px" }} />}
             </div>
           </div>
         )}
 
-        {error && (
-          <div className="error-message">
-            Error: {error}
-          </div>
-        )}
+        {error && <div className="error-message">Error: {error}</div>}
       </div>
 
-      <input 
-        type="file" 
-        accept="image/*" 
-        ref={fileInputRef} 
-        style={{ display: 'none' }} 
-        onChange={handleFileChange} 
-      />
-
-      <canvas ref={canvasRef} style={{ display: 'none' }}></canvas>
+      <input type="file" accept="image/*" ref={fileInputRef} style={{ display: "none" }} onChange={handleFileChange} />
+      <canvas ref={canvasRef} style={{ display: "none" }}></canvas>
     </>
   );
 }
