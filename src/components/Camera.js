@@ -11,6 +11,8 @@ function Camera() {
     // Attempt to access the media devices
     navigator.mediaDevices.getUserMedia({ video: true })
       .then(function (stream) {
+        stream.width = document.getElementById("videoElement").clientWidth;
+        stream.height = document.getElementById("videoElement").clientHeight;
         console.log("Media stream successfully acquired!");
         videoRef.current.srcObject = stream; // Set the video source to the stream
       })
