@@ -197,7 +197,26 @@ button:hover {
   background-color: rgba(0, 0, 0, 0.5);
 }
 
+#question {
+  color: white;
+  font-weight: bold;
+}
+
+#QuestionAnswersContainer {
+  display: flex;
+  gap: 5vw;
+}
+
+.option {
+  cursor: pointer;
+  width: 5vw;
+  border-radius: 5px; /* Rounded corners */
+  font-size: 1vw;
+  border: none;
+}
+
 .popup-content {
+  display: flex;
   background-color: rgb(71, 71, 71);
   border-radius: 5px;
   padding: 20px;

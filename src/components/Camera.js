@@ -3,6 +3,9 @@ import axios from "axios";
 import { updatePoints, getTotalPoints } from "./updatePoint";
 
 function Camera() {
+
+  var [recyclable, description] = [false, ""];
+
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const fileInputRef = useRef(null);
@@ -106,9 +109,19 @@ function Camera() {
       setIsPopupVisible(true);
   
       const predictedClass = response.data?.predictions[0]?.class;
-      const [recyclable, description] = isRecyclable(predictedClass); // Ensure this line is correct
-  
-      await updatePoints(recyclable, description); // Update points in Firestore
+      [recyclable, description] = isRecyclable(predictedClass); // Ensure this line is correct
+
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const OnOptionChosen = async (recyclable, description, optionChosen) => {
+
+    try {
+      await updatePoints(recyclable, description, optionChosen); // Update points in Firestore
       const updatedPoints = await getTotalPoints(); // Fetch updated points
       setTotalPoints(updatedPoints); // Update state
   
@@ -118,7 +131,7 @@ function Camera() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }
   
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -182,6 +195,23 @@ function Camera() {
               </button>
               {snapshot && <img src={snapshot} alt="Snapshot" style={{ maxWidth: "300px" }} />}
               {uploadedImage && <img src={uploadedImage} alt="Uploaded" style={{ maxWidth: "300px" }} />}
+             
+              <p id = "question">Recyclable?</p>
+              
+              <div id = "QuestionAnswersContainer">
+                <button id = "yesbutton" class = "option" onClick={() => {
+                  OnOptionChosen(recyclable, description, true);
+                  setIsPopupVisible(false);
+                  setSnapshot(null);
+                  setUploadedImage(null);
+                }}>YES</button>
+                <button id = "nobutton" class = "option" onClick={() => {
+                  OnOptionChosen(recyclable, description, false);
+                  setIsPopupVisible(false);
+                  setSnapshot(null);
+                  setUploadedImage(null);
+                }}>NO</button>
+              </div>
             </div>
           </div>
         )}

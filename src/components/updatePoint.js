@@ -3,21 +3,27 @@ import { db } from "./firebase"; // Import the initialized db
 import { addDoc, collection, getDocs } from "firebase/firestore";
 
 // Function to update points
-const updatePoints = async (isRecyclable, description) => {
+const updatePoints = async (isRecyclable, description, optionChosen) => {
+
+  if (isRecyclable != optionChosen) {
+    console.log("incorrect");
+    const audio = new Audio('/sfx/Incorrect.mp3');
+    audio.play();
+    return;
+  }
+
   try {
-    let points = 0; // Assign points if recyclable
-    console.log(isRecyclable);
-    if (isRecyclable) {
-        points = 10;
-        console.log("ran");
-    }
+    let points = 10;
     
     console.log(points);
-    // Store new entry in Firestore
+    
     await addDoc(collection(db, "users"), {
       timestamp: new Date(),
       points: points
     });
+
+    const audio = new Audio('/sfx/Correct.mp3');
+    audio.play();
 
     console.log("Points updated successfully:", points);
   } catch (error) {
