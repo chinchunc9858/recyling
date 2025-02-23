@@ -125,13 +125,14 @@ body {
   border-radius: 5px; /* Rounded corners */
   font-size: 1vw;
   font-weight: bold;
-  text-shadow: 
-    2px 2px 0 #2b2b2b,
-    -1px -1px 0 #2b2b2b,
-    1px -1px 0 #2b2b2b,
-    -1px 1px 0 #2b2b2b,
-    1px 1px 0 #2b2b2b;
-  white-space: nowrap; /* Prevent text wrapping */
+  text-shadow:
+       2px 2px 0 #2b2b2b,
+     -1px -1px 0 #2b2b2b,  
+      1px -1px 0 #2b2b2b,
+      -1px 1px 0 #2b2b2b,
+       1px 1px 0 #2b2b2b;
+  float: left;
+  white-space: nowrap;
 }
 
 button:hover {

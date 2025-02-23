@@ -1,9 +1,12 @@
-let score = 0;
- function updateScore(isRecyclable){
+let points = 0;
+function updatePoints(props){
+    const [isRecyclable, Description] = props;
     if (isRecyclable){
-        score += 10;
+        points += 10;
+        console.log(points);
     }
     else {
         console.log("This item is not recyclable");
     }
- }
+}
+export default updatePoints
