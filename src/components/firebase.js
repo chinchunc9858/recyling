@@ -2,6 +2,7 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 
+//Sup
 // Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyAV3NSgC5HTWc9psAZFFy6rdYXBgZYMorY",
