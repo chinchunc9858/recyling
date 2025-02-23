@@ -2,9 +2,10 @@ import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { updatePoints, getTotalPoints } from "./updatePoint";
 
-function Camera() {
+var recyclable = false;
+var description = "";
 
-  var [recyclable, description] = [false, ""];
+function Camera() {
 
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
@@ -110,7 +111,7 @@ function Camera() {
   
       const predictedClass = response.data?.predictions[0]?.class;
       [recyclable, description] = isRecyclable(predictedClass); // Ensure this line is correct
-
+    
     } catch (error) {
       setError(error.message);
     } finally {

@@ -4,7 +4,7 @@ import { addDoc, collection, getDocs } from "firebase/firestore";
 
 // Function to update points
 const updatePoints = async (isRecyclable, description, optionChosen) => {
-
+  console.log(description);
   if (isRecyclable != optionChosen) {
     console.log("incorrect");
     const audio = new Audio('/sfx/Incorrect.mp3');
