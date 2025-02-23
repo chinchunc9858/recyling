@@ -7,12 +7,13 @@ import Frame from './components/Frame';
 import Camera from './components/Camera';
 
 function App() {
+
+  console.log("lOLOLLOLOL");
+
   return (
     <div className="App">
       <header className="App-header">
         
-        <p>losdl</p>
-
         <Frame />
 
       </header>
