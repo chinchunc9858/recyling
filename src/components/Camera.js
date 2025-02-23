@@ -13,6 +13,7 @@ function Camera() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [prediction, setPrediction] = useState(null);
+  const [isPopupVisible, setIsPopupVisible] = useState(false); // State for popup visibility
 
   useEffect(() => {
     navigator.mediaDevices.getUserMedia({ video: true })
@@ -42,6 +43,7 @@ function Camera() {
         }
       });
       setPrediction(response.data);
+      setIsPopupVisible(true); // Show popup when prediction is received
     } catch (error) {
       setError(error.message);
     } finally {
@@ -52,13 +54,13 @@ function Camera() {
   const takeSnapshot = () => {
     const video = videoRef.current;
     const canvas = canvasRef.current;
-    
+
     canvas.width = video.videoWidth;
     canvas.height = video.videoHeight;
-    
+
     const context = canvas.getContext('2d');
     context.drawImage(video, 0, 0, canvas.width, canvas.height);
-    
+
     const imageDataUrl = canvas.toDataURL('image/png');
     const base64Data = imageDataUrl.split(',')[1];
     setSnapshot(imageDataUrl);
@@ -82,6 +84,12 @@ function Camera() {
     fileInputRef.current.click();
   };
 
+  const closePopup = () => {
+    setIsPopupVisible(false);
+    setSnapshot(null); // Reset snapshot
+    setUploadedImage(null); // Reset uploaded image
+  };
+  
   return (
     <>
       <div id="container">
@@ -90,22 +98,25 @@ function Camera() {
           <video ref={videoRef} id="videoElement" width="1980" height="1080" autoPlay></video>
 
           <div id="buttonsContainer">
-            <button id="TakePhotoButton" onClick={takeSnapshot} disabled={isLoading}>
+            <button className="options" id="TakePhotoButton" onClick={takeSnapshot} disabled={isLoading}>
               {isLoading ? 'Processing...' : '📷 Take Photo'}
             </button>
-            <button id="FlipCameraButton">🔄 Flip Camera</button>
-            <button id="UploadPhoto" onClick={handleUploadPhoto} disabled={isLoading}>
+            <button className="options" id="FlipCameraButton">🔄 Flip Camera</button>
+            <button className="options" id="UploadPhoto" onClick={handleUploadPhoto} disabled={isLoading}>
               {isLoading ? 'Processing...' : '📷 Upload a Photo'}
             </button>
           </div>
         </div>
 
-        {prediction && (
-          <div id="popup" className="popup" style={{ display: "flex" }}>
+        {isPopupVisible && (
+          <div id="popup" className="popup">
             <div className="popup-content">
-              <h3>Classification Result:</h3>
-              <p>Class: {prediction?.predictions[0].class}</p>
-              <p>Confidence: {(prediction?.confidence * 100).toFixed(1)}%</p>
+              <h3 className="popupText">Classification Result:</h3>
+              <p className="popupText">Class: {prediction?.predictions[0]?.class || "Unknown"}</p>
+              <p className="popupText">Confidence: {prediction?.confidence ? `${(prediction.confidence * 100).toFixed(1)}%` : "N/A"}</p>
+              <button id="popupexit" onClick={closePopup}>X</button>
+              {snapshot && <img src={snapshot} alt="Snapshot" style={{ maxWidth: '300px' }} />}
+              {uploadedImage && <img src={uploadedImage} alt="Uploaded" style={{ maxWidth: '300px' }} />}
             </div>
           </div>
         )}
@@ -126,9 +137,6 @@ function Camera() {
       />
 
       <canvas ref={canvasRef} style={{ display: 'none' }}></canvas>
-
-      {snapshot && <img src={snapshot} alt="Snapshot" style={{ maxWidth: '300px' }} />}
-      {uploadedImage && <img src={uploadedImage} alt="Uploaded" style={{ maxWidth: '300px' }} />}
     </>
   );
 }
