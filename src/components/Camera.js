@@ -1,5 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 
+
+
+
 function Camera() {
   const videoRef = useRef(null); // Ref for the video element
   const canvasRef = useRef(null); // Ref for the canvas element

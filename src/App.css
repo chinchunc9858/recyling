@@ -7,14 +7,14 @@
 
 #videoWrapper {
   position: relative; /* This allows absolute positioning for buttons */
-  max-width: 750px; /* Max width for video */
+  max-width: 100%; /* Max width for video */
   width: 100%; /* Responsive */
   background-color: #666; /* Background color for the video frame */
 }
 
 #videoElement {
   width: 100%; /* Full width of the wrapper */
-  height: auto; /* Maintain aspect ratio */
+  height: 100%; /* Maintain aspect ratio */
   display: block; /* Ensures video fills the wrapper */
 }
 
@@ -37,7 +37,6 @@ button {
   border-radius: 5px;
   font-size: 16px;
 }
-<<<<<<< HEAD
 
 /* Ensures the button is inside the bottom of the video frame */
 #TakePhotoButton {
@@ -57,5 +56,5 @@ button:hover {
   transform: scale(1.05); /* Slightly grow the button */
   transition: transform 0.3s ease, background-color 0.3s ease; /* Smooth transition */
 }
-=======
->>>>>>> 007ea8b57604b623aef3c88fc4abe13eeb5bc882
+
+
