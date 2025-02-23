@@ -1,11 +1,9 @@
-
 #Heading {
-  display: flex;
   position: absolute;
-  justify-content: center;
+  top: 10px;
   left: 50%;
-  transform: translateX(-50%) translateY(-200%);
-  Color: white;
+  transform: translateX(-50%);
+  color: white;
   font-weight: bold;
   font-size: 5vh;
   text-shadow:
@@ -14,8 +12,8 @@
       1px -1px 0 #2b2b2b,
       -1px 1px 0 #2b2b2b,
        1px 1px 0 #2b2b2b;
-  float: left;
   white-space: nowrap;
+  z-index: 2;
 }
 
 .popup {
@@ -32,59 +30,69 @@
 }
 
 .popup-content {
-  position: relative;
-  top: 30%;
-  background-color: rgb(71, 71, 71); /* Popup background */
-  border-radius: 5px; /* Rounded corners */
-  padding: 20px; /* Spacing */
-  display: flex; /* Flexbox for button alignment */
-  gap: 10px; /* Space between buttons */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgb(71, 71, 71);
+  border-radius: 5px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 body {
   background-color: lightblue;
+  margin: 0;
+  padding: 0;
 }
 
 #container {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh; /* Full viewport height */
+  height: 100vh;
+  width: 100vw;
 }
 
 #videoWrapper {
-  position: relative; /* This allows absolute positioning for buttons */
-  max-width: 750px; /* Max width for video */
-  width: 100%; /* Responsive */
-  background-color: #666; /* Background color for the video frame */
+  position: relative;
+  width: 100%;
+  max-width: 750px;
+  height: 80vh; /* Ensures it scales */
+  background-color: #666;
   border: 5px dashed rgb(55, 55, 55);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 #videoElement {
-  width: 100%; /* Full width of the wrapper */
-  height: auto; /* Maintain aspect ratio */
-  display: block; /* Ensures video fills the wrapper */
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ensures it fills the container */
+  display: block;
 }
 
 #buttonsContainer {
-  position: absolute; /* Positioning buttons over the video */
-  bottom: 10px; /* 10px from the bottom of the video wrapper */
-  left: 50%; /* Centering horizontally */
-  transform: translateX(-50%); /* Adjust for center alignment */
-  display: flex; /* Flexbox for button alignment */
-  gap: 10px; /* Space between buttons */
-  z-index: 1; /* Ensure buttons are on top of the video */
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+  z-index: 2;
 }
 
 button {
-  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  background-color: rgba(0, 0, 0, 0.5);
   color: white;
   border: none;
-  padding: 10px 20px;
+  padding: 1vw 2vw;
   cursor: pointer;
   border-radius: 5px;
   font-size: 16px;
-  Color: white;
   font-weight: bold;
   text-shadow:
        2px 2px 0 #2b2b2b,
@@ -97,7 +105,7 @@ button {
 }
 
 button:hover {
-  background-color: rgba(0, 0, 0, 0.7); /* Darken background on hover */
-  transform: scale(1.05); /* Slightly grow the button */
-  transition: transform 0.3s ease, background-color 0.3s ease; /* Smooth transition */
+  background-color: rgba(0, 0, 0, 0.7);
+  transform: scale(1.05);
+  transition: transform 0.3s ease, background-color 0.3s ease;
 }
