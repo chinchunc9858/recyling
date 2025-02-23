@@ -6,9 +6,7 @@ import './App.css';
 import Camera from './components/Camera';
 
 function App() {
-
-  console.log("lOLOLLOLOL");
-
+  
   return (
     <div className="App">
       <Camera />
