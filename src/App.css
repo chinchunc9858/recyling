@@ -201,3 +201,16 @@ button:hover {
   text-align: center;
 }
 
+#CameraDiv {
+  margin : 0px auto;
+  border : 10px #333 solid;
+  background: #cdcdcd;
+  width : 800px;
+  height : 500px;
+}
+
+#videoElement {
+  width : 500px;
+  height : 375px;
+  background-color : #666;
+}
