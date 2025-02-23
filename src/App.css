@@ -1,13 +1,40 @@
 
 #container {
   display: flex;
-  justify-content: center; 
-  align-items: center; 
-  height: 100vh; 
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  position: relative; /* Ensures buttons are positioned relative to this container */
 }
 
 #videoElement {
-  width : 750px;
-  height : 400px;
+  width: 100%;
+  max-width: 750px;
+  height: auto;
   background-color: #666;
+  display: block;
+}
+
+button {
+  position: absolute; /* Positions buttons over the video */
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+/* Ensures the button is inside the bottom of the video frame */
+#TakePhotoButton {
+  bottom: 10px; /* Sticks to the bottom */
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* Positions the Flip Camera button at the top-right corner of the video */
+#FlipCameraButton {
+  top: 10px;
+  right: 10px;
 }

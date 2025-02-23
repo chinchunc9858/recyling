@@ -18,8 +18,8 @@ return (
     <>  
         <div id = "container">
             <video id = "videoElement" autoPlay></video>
-            <button id = "TakePhotoButton"></button>
-            <button id = "FlipCameraButton"></button>
+            <button id = "TakePhotoButton">📷 Take Photo</button>
+            <button id = "FlipCameraButton">🔄 Flip Camera</button>
         </div>
     </>
 );
