@@ -1,40 +1,39 @@
-
 #container {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  position: relative; /* Ensures buttons are positioned relative to this container */
+  height: 100vh; /* Full viewport height */
+}
+
+#videoWrapper {
+  position: relative; /* This allows absolute positioning for buttons */
+  max-width: 750px; /* Max width for video */
+  width: 100%; /* Responsive */
+  background-color: #666; /* Background color for the video frame */
 }
 
 #videoElement {
-  width: 100%;
-  max-width: 750px;
-  height: auto;
-  background-color: #666;
-  display: block;
+  width: 100%; /* Full width of the wrapper */
+  height: auto; /* Maintain aspect ratio */
+  display: block; /* Ensures video fills the wrapper */
+}
+
+#buttonsContainer {
+  position: absolute; /* Positioning buttons over the video */
+  bottom: 10px; /* 10px from the bottom of the video wrapper */
+  left: 50%; /* Centering horizontally */
+  transform: translateX(-50%); /* Adjust for center alignment */
+  display: flex; /* Flexbox for button alignment */
+  gap: 10px; /* Space between buttons */
+  z-index: 1; /* Ensure buttons are on top of the video */
 }
 
 button {
-  position: absolute; /* Positions buttons over the video */
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
   color: white;
   border: none;
   padding: 10px 20px;
   cursor: pointer;
   border-radius: 5px;
   font-size: 16px;
-}
-
-/* Ensures the button is inside the bottom of the video frame */
-#TakePhotoButton {
-  bottom: 10px; /* Sticks to the bottom */
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-/* Positions the Flip Camera button at the top-right corner of the video */
-#FlipCameraButton {
-  top: 10px;
-  right: 10px;
 }

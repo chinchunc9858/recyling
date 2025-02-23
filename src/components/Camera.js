@@ -39,14 +39,22 @@ function Camera() {
       {/* Video element to display the camera feed */}
       
       <div id = "container">
-        <video ref={videoRef} id="videoElement" width="1980" height="1080" autoPlay></video>
+
+        <div id = "videoWrapper">
+
+            <video ref={videoRef} id="videoElement" width="1980" height="1080" autoPlay></video>
+        
+            <div id = "buttonsContainer">
+                <button id = "TakePhotoButton" onClick={takeSnapshot}>📷 Take Photo</button>
+                <button id = "FlipCameraButton">🔄 Flip Camera</button>
+            </div>
+
+        </div>
+        
       </div>
-      
 
       {/* Button to take a snapshot */}
-      <button id = "TakePhotoButton" onClick={takeSnapshot}>📷 Take Photo</button>
-      <button id = "FlipCameraButton">🔄 Flip Camera</button>
-
+    
       {/* Hidden canvas element to capture the snapshot */}
       <canvas ref={canvasRef} style={{ display: 'none' }}></canvas>
 
