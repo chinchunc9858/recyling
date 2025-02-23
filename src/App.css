@@ -4,8 +4,18 @@
   position: absolute;
   justify-content: center;
   left: 50%;
-  transform: translateX(-50%);
-  top: -75px;
+  transform: translateX(-50%) translateY(-200%);
+  Color: white;
+  font-weight: bold;
+  font-size: 5vh;
+  text-shadow:
+       3px 3px 0 #2b2b2b,
+     -1px -1px 0 #2b2b2b,  
+      1px -1px 0 #2b2b2b,
+      -1px 1px 0 #2b2b2b,
+       1px 1px 0 #2b2b2b;
+  float: left;
+  white-space: nowrap;
 }
 
 .popup {
@@ -47,6 +57,7 @@ body {
   max-width: 750px; /* Max width for video */
   width: 100%; /* Responsive */
   background-color: #666; /* Background color for the video frame */
+  border: 5px dashed rgb(55, 55, 55);
 }
 
 #videoElement {
@@ -73,6 +84,16 @@ button {
   cursor: pointer;
   border-radius: 5px;
   font-size: 16px;
+  Color: white;
+  font-weight: bold;
+  text-shadow:
+       2px 2px 0 #2b2b2b,
+     -1px -1px 0 #2b2b2b,  
+      1px -1px 0 #2b2b2b,
+      -1px 1px 0 #2b2b2b,
+       1px 1px 0 #2b2b2b;
+  float: left;
+  white-space: nowrap;
 }
 
 button:hover {
