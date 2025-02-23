@@ -1,4 +1,6 @@
+
 let points = 0;
+
 function updatePoints(props){
     const [isRecyclable, Description] = props;
     if (isRecyclable){
