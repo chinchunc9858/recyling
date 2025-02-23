@@ -165,7 +165,13 @@ function Camera() {
             <div className="popup-content">
               <h3 className="popupText">Classification Result:</h3>
               <p className="popupText">Class: {prediction?.predictions[0]?.class || "Unknown"}</p>
-              <button id="popupexit" onClick={() => setIsPopupVisible(false)}>X</button>
+              <button id="popupexit" onClick={() => {
+                setIsPopupVisible(false);
+                setSnapshot(null);
+                setUploadedImage(null);
+              }}>
+                X
+              </button>
               {snapshot && <img src={snapshot} alt="Snapshot" style={{ maxWidth: "300px" }} />}
               {uploadedImage && <img src={uploadedImage} alt="Uploaded" style={{ maxWidth: "300px" }} />}
             </div>
