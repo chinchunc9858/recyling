@@ -1,20 +1,24 @@
-import React from "react";
+import React, { useEffect } from 'react';
 
 function Camera() {
-    return (
-        <>
-        
-        <div id = "CameraDiv">
+useEffect(() => {
+    // Attempt to access the media devices
+    navigator.mediaDevices.getUserMedia({ video: true })
+    .then(function(stream) {
+        console.log("Media stream successfully acquired!");
+        const videoElement = document.querySelector('#videoElement');
+        videoElement.srcObject = stream;
+    })
+    .catch(function(error) {
+        console.error("Error accessing media devices: ", error);
+    });
+  }, []);  // Empty dependency array to run only once on mount
 
-            <video autoplay = "true" id = "videoElement">
-
-
-            </video>
-
-        </div>
-
-        </>
-    );
+return (
+    <>
+        <video id="videoElement" width="1980" height="1080" autoPlay></video>
+    </>
+);
 }
 
 export default Camera;
