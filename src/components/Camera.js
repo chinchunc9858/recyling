@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
-import updatePoints from './updatePoint';
+import { updatePoints } from './updatePoint';
 
 function Camera() {
   const videoRef = useRef(null);
