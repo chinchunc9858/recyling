@@ -15,9 +15,12 @@ useEffect(() => {
 }, []);
 
 return (
-    <>
-        <video id="videoElement" width="1980" height="1080" autoPlay></video>
-
+    <>  
+        <div id = "container">
+            <video id = "videoElement" autoPlay></video>
+            <button id = "TakePhotoButton"></button>
+            <button id = "FlipCameraButton"></button>
+        </div>
     </>
 );
 }

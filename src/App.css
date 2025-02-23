@@ -1,6 +1,13 @@
 
+#container {
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
+  height: 100vh; 
+}
+
 #videoElement {
-  width : 100px;
-  height : 100px;
+  width : 750px;
+  height : 400px;
   background-color: #666;
 }
