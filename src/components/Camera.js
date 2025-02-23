@@ -10,13 +10,14 @@ useEffect(() => {
         videoElement.srcObject = stream;
     })
     .catch(function(error) {
-        console.error("Error accessing media devices: ", error);
+        console.log("Error accessing media devices: ", error);
     });
   }, []);  // Empty dependency array to run only once on mount
 
 return (
     <>
         <video id="videoElement" width="1980" height="1080" autoPlay></video>
+
     </>
 );
 }
