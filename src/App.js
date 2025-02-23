@@ -9,7 +9,9 @@ function App() {
   
   return (
     <div className="App">
-      <Camera />
+      <div className="flex justify-center items-center h-screen">
+        <Camera />
+      </div>
     </div>
   );
 }
