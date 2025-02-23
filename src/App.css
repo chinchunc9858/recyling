@@ -37,25 +37,9 @@ button {
   border-radius: 5px;
   font-size: 16px;
 }
-<<<<<<< HEAD
-
-/* Ensures the button is inside the bottom of the video frame */
-#TakePhotoButton {
-  bottom: 10px; /* Sticks to the bottom */
-  left: 50%;
-  transform: translateX(-50%);
-}
-
-/* Positions the Flip Camera button at the top-right corner of the video */
-#FlipCameraButton {
-  top: 10px;
-  right: 10px;
-}
 
 button:hover {
   background-color: rgba(0, 0, 0, 0.7); /* Darken background on hover */
   transform: scale(1.05); /* Slightly grow the button */
   transition: transform 0.3s ease, background-color 0.3s ease; /* Smooth transition */
 }
-=======
->>>>>>> 007ea8b57604b623aef3c88fc4abe13eeb5bc882
